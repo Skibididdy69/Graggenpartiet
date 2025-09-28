@@ -5,25 +5,17 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Graggenpartiet — Officiell hemsida</title>
   <meta name="description" content="Satirisk hemsida för Graggenpartiet. Vision, åsikter, program och kontaktuppgifter." />
-
-  <!-- Länka till externa CSS-filen -->
   <link rel="stylesheet" href="style.css">
-
-  <!-- Meta för bättre rendering i äldre mobila webbläsare -->
   <meta name="theme-color" content="#2b6cb0" />
 </head>
 <body>
-  <!-- Hoppa-till-innehåll för tangentbordsanvändare -->
   <a class="skip-link" href="#main">Hoppa till innehåll</a>
 
-  <!-- HEADER: semantisk + navigering -->
   <header class="site-header" role="banner">
     <div class="container header-inner">
-      <!-- Branding -->
       <div class="brand" aria-label="Graggenpartiet">
         <div class="logo" aria-hidden="false">
-          <!-- OBS: uppdatera src om filen ligger i en undermapp -->
-          <img src="ChatGPT_Image_25_sep._2025_16_09_02-removebg-preview.png" alt="Graggenpartiets logotyp — en grön groda formad som bokstaven G">
+          <img src="assets/logo.png" alt="Graggenpartiets logotyp — en grön groda formad som bokstaven G">
         </div>
         <div class="brand-text">
           <div class="site-title">Graggenpartiet</div>
@@ -31,59 +23,50 @@
         </div>
       </div>
 
-      <!-- Mobil menyknapp (tillgänglig) -->
       <button class="menu-toggle" aria-controls="primary-navigation" aria-expanded="false" aria-label="Visa meny">
         <span class="hamburger" aria-hidden="true"></span>
       </button>
 
-      <!-- Primär navigering -->
       <nav id="primary-navigation" class="primary-nav" aria-label="Huvudmeny">
         <ul class="nav-list">
-          <li><a href="#vision">Vision</a></li>
-          <li><a href="#program">Program</a></li>
-          <li><a href="#nyheter">Nyheter</a></li>
-          <li><a href="#delta">Delta</a></li>
-          <li><a href="#kontakt">Kontakt</a></li>
+          <li><a href="index.html#vision">Vision</a></li>
+          <li><a href="program.html">Program (lång)</a></li>
+          <li><a href="index.html#nyheter">Nyheter</a></li>
+          <li><a href="index.html#delta">Delta</a></li>
+          <li><a href="index.html#kontakt">Kontakt</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <!-- HUVUDINNEHÅLL -->
   <main id="main" class="container" role="main">
-    <!-- HERO / Intro -->
     <section class="hero" aria-labelledby="hero-heading">
       <div class="card hero-card">
         <h1 id="hero-heading">Välkommen till Graggenpartiet</h1>
         <p class="lead">En vision om ordning, disciplin och en groda som styr landet.</p>
         <p class="hero-actions">
-          <a class="btn primary" href="#program">Läs vårt program</a>
+          <a class="btn primary" href="program.html">Läs hela partiprogrammet</a>
           <a class="btn ghost" href="#delta">Engagera dig</a>
         </p>
       </div>
     </section>
 
-    <!-- VISION -->
     <section id="vision" class="card content-section" aria-labelledby="vision-heading">
       <h2 id="vision-heading">Vision</h2>
-      <p>Graggenpartiet ska ena Sverige under ett starkt ledarskap. Ordning och disciplin sätts före byråkrati och ineffektivitet. Alla beslut centraliseras för att säkerställa stabilitet.</p>
+      <p>Graggenpartiet ska ena Sverige under ett starkt ledarskap. Ordning och disciplin sätts före byråkrati och ineffektivitet. Alla beslut centraliseras för att säkerställa effektivitet och långsiktig stabilitet.</p>
     </section>
 
-    <!-- PROGRAM -->
-    <section id="program" class="card content-section" aria-labelledby="program-heading">
-      <h2 id="program-heading">Partiprogram (kortversion)</h2>
+    <section id="program" class="card content-section" aria-labelledby="program-short-heading">
+      <h2 id="program-short-heading">Program — kortversion</h2>
       <ul class="policies">
         <li><strong>Makt:</strong> Full diktatur på 10 mandat under Kejsare Gregor. Oppositionen? Skrotad.</li>
-        <li><strong>Säkerhet:</strong> En jättemur runt Sverige och barriärer kring utsatta områden som exempelvis Angered.</li>
+        <li><strong>Säkerhet:</strong> En jättemur runt Sverige och barriärer kring utsatta områden.</li>
         <li><strong>Kultur:</strong> Grodan Boll blir nationell symbol, Fågel Roger nationalsång. All kultur övervakas.</li>
         <li><strong>Ekonomi:</strong> 90 % skatt: 80 % till Graggenfonden, 10 % till Grodan Boll.</li>
-        <li><strong>Infrastruktur:</strong> Murar och barriärer överallt. Städer planeras centralt.</li>
-        <li><strong>Hälsa:</strong> Sjukvård och militär centraliseras. Allt för det svenska folket.</li>
-        <li><strong>Utrikespolitik:</strong> Helt stängda gränser för icke svenska medborgare.</li>
       </ul>
+      <p class="mt-md"><a class="btn primary" href="program.html">Läs hela programmet (detaljerad version)</a></p>
     </section>
 
-    <!-- NYHETER -->
     <section id="nyheter" class="card content-section" aria-labelledby="nyheter-heading">
       <h2 id="nyheter-heading">Nyheter</h2>
       <article class="news-item" aria-labelledby="news-1-title">
@@ -93,7 +76,6 @@
       </article>
     </section>
 
-    <!-- DELTA / FORM -->
     <section id="delta" class="card content-section" aria-labelledby="delta-heading">
       <h2 id="delta-heading">Delta / Bli medlem</h2>
       <p>Vill du engagera dig i partiet? Fyll i formuläret nedan:</p>
@@ -111,7 +93,7 @@
 
         <div class="form-row">
           <label for="message">Meddelande</label>
-          <textarea id="message" name="message" rows="5" placeholder="Berätta mer..."></textarea>
+          <textarea id="message" name="message" rows="4" placeholder="Berätta mer..."></textarea>
         </div>
 
         <div class="form-row form-actions">
@@ -121,37 +103,28 @@
       </form>
     </section>
 
-    <!-- KONTAKT & SOCIAL -->
     <section id="kontakt" class="grid two-up gap-lg" aria-labelledby="kontakt-heading">
       <div class="card" aria-labelledby="kontakt-heading">
         <h3 id="kontakt-heading">Kontakt</h3>
         <p>E-post: <a href="mailto:graggenpartiet@gmail.com">graggenpartiet@gmail.com</a></p>
-
-
-  </main>
-
-  <!-- FOOTER -->
+      </div>
+      
   <footer class="site-footer" role="contentinfo">
     <div class="container footer-inner">
       <small>2025 copyright © Graggenpartiet.</small>
     </div>
   </footer>
 
-  <!-- Minimal, tydlig JavaScript för meny (ACC-kompatibel, mycket liten) -->
   <script>
     (function () {
       const toggle = document.querySelector('.menu-toggle');
       const nav = document.getElementById('primary-navigation');
-
       if (!toggle || !nav) return;
-
       toggle.addEventListener('click', function () {
         const isOpen = this.getAttribute('aria-expanded') === 'true';
         this.setAttribute('aria-expanded', String(!isOpen));
         nav.dataset.open = isOpen ? 'false' : 'true';
       });
-
-      // Stäng meny på Escape
       document.addEventListener('keyup', function (e) {
         if (e.key === 'Escape' && nav.dataset.open === 'true') {
           toggle.setAttribute('aria-expanded', 'false');
