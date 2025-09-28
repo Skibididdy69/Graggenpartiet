@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Graggenpartiet — Officiell hemsida</title>
+  <meta name="description" content="Satirisk hemsida för Graggenpartiet. Vision, åsikter, program och kontaktuppgifter." />
+  <style>
+    :root{--accent:#2b6cb0;--muted:#6b7280;--bg:#f7fafc}
+    *{box-sizing:border-box}
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial, sans-serif;margin:0;background:var(--bg);color:#111}
+    header{background:white;border-bottom:1px solid #e6eef6}
+    .container{max-width:1000px;margin:0 auto;padding:24px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:56px;height:56px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#68b3ff);display:flex;align-items:center;justify-content:center;color:white;font-weight:700}
+    nav{margin-left:auto}
+    nav a{margin-left:14px;text-decoration:none;color:var(--muted);font-weight:600}
+    .hero{padding:48px 0;display:grid;grid-template-columns:1fr;gap:20px}
+    .hero h1{font-size:32px;margin:0 0 8px}
+    .hero p{margin:0;color:var(--muted)}
+    .card{background:white;padding:18px;border-radius:12px;box-shadow:0 6px 18px rgba(10,20,30,0.04)}
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+    section{margin-top:18px}
+    .policies li{margin-bottom:10px}
+    footer{margin-top:36px;padding:24px 0;color:var(--muted);text-align:center}
+    .btn{display:inline-block;padding:10px 16px;border-radius:10px;background:var(--accent);color:white;text-decoration:none;font-weight:700}
+    form label{display:block;font-size:14px;margin-bottom:6px;color:var(--muted)}
+    input,textarea,select{width:100%;padding:10px;border:1px solid #e6eef6;border-radius:8px}
+    @media(max-width:800px){.grid{grid-template-columns:1fr}.hero{padding:28px}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container" style="display:flex;align-items:center;gap:16px">
+      <div class="brand">
+        <div class="logo">G</div>
+        <div>
+          <div style="font-weight:800">Graggenpartiet</div>
+          <div style="font-size:12px;color:var(--muted)">Hemsida</div>
+        </div>
+      </div>
+      <nav>
+        <a href="#vision">Vision</a>
+        <a href="#program">Program</a>
+        <a href="#nyheter">Nyheter</a>
+        <a href="#delta">Delta</a>
+        <a href="#kontakt">Kontakt</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="card">
+        <h1>Välkommen till Graggenpartiet</h1>
+        <p>En vision om ordning, disciplin och en groda som styr landet.</p>
+        <div style="margin-top:14px">
+          <a class="btn" href="#program">Läs vårt program</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="vision" class="card">
+      <h2>Vision</h2>
+      <p>Graggenpartiet ska ena Sverige under ett stark ledarskap. Ordning och disciplin sätts före byråkrati och ineffektivitet. Alla beslut centraliseras för att säkerställa stabilitet. </p>
+    </section>
+
+    <section id="program" class="card">
+      <h2>Partiprogram (kortversion)</h2>
+      <ul class="policies">
+        <li><strong>Makt:</strong> Full diktatur på 10 mandat under Kejsare Gregor. Oppositionen? Skrotad.</li>
+        <li><strong>Säkerhet:</strong> En jättemur runt Sverige och barriärer kring utsatta områden som exempelvis Angered.</li>
+        <li><strong>Kultur:</strong> Grodan Boll blir nationell symbol, Fågel Roger nationalsång. All kultur övervakas.</li>
+        <li><strong>Ekonomi:</strong> 90 % skatt: 80 % till Graggenfonden, 10 % till Grodan Boll.</li>
+        <li><strong>Infrastruktur:</strong> Murar och barriärer överallt. Städer planeras centralt.</li>
+        <li><strong>Hälsa:</strong> Sjukvård och militär centraliseras. Allt för det svenska folket.</li>
+        <li><strong>Utrikespolitik:</strong> Helt stängda gränser för icke svenska medborgare.</li>
+      </ul>
+    </section>
+
+    <section id="nyheter" class="card">
+      <h2>Nyheter</h2>
+      <article style="margin-bottom:12px">
+        <strong>Lansering av hemsidan</strong>
+        <div style="color:var(--muted);font-size:13px">Publicerad idag</div>
+        <p>Nu finns Graggenpartiet på nätet . Ta del av visionen.</p>
+      </article>
+    </section>
+
+    <section id="delta" class="card">
+      <h2>Delta / Bli medlem</h2>
+      <p>Vill du engagera dig i partiet? Fyll i formuläret nedan:</p>
+      <form onsubmit="event.preventDefault();alert('Formulär skickat (demo)')">
+        <label for="name">Namn</label>
+        <input id="name" placeholder="Ditt namn" required />
+        <label for="email" style="margin-top:8px">E-post</label>
+        <input id="email" type="email" placeholder="kontakt@exempel.se" required />
+        <label for="message" style="margin-top:8px">Meddelande</label>
+        <textarea id="message" rows="4" placeholder="Berätta mer..."></textarea>
+        <div style="margin-top:10px">
+          <button class="btn" type="submit">Skicka intresse</button>
+        </div>
+      </form>
+    </section>
+
+    <section id="kontakt" style="margin-top:18px">
+      <div class="grid">
+        <div class="card">
+          <h3>Kontakt</h3>
+          <p>E-post: <a href="mailto:graggenpartiet@gmail.com">graggenpartiet@gmail.com</a></
+        </div>
+        <div class="card">
+          
+    <footer>
+      <small>2025 copyright © Graggenpartiet.</small>
+    </footer>
+  </main>
+
+</body>
+</html>
