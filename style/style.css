@@ -1,0 +1,406 @@
+/* =========================================================================
+   style.css — detaljerad, modulär och tillgänglig stil för Graggenpartiet
+   =========================================================================
+   Instruktioner:
+   - Spara i samma mapp som index.html
+   - Byt variabler (färger, typsnitt) efter behov
+   - Kommenterad för pedagogisk läsning
+   ========================================================================= */
+
+/* ------------------------
+   1. Root-variabler & design tokens
+   ------------------------ */
+:root{
+  /* Färger */
+  --accent: #2b6cb0;           /* primär accentfärg */
+  --accent-600: #1e56a0;
+  --muted: #6b7280;            /* sekundär textfärg */
+  --bg: #f7fafc;               /* sidbakgrund */
+  --card-bg: #ffffff;
+  --border: #e6eef6;
+  --shadow: 0 6px 18px rgba(10,20,30,0.04);
+
+  /* Typografi */
+  --font-sans: Inter, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --base-font-size: 16px;
+  --line-height: 1.6;
+  --scale-step: 1.15;          /* relativ typografisk skala */
+
+  /* Avstånd (spacers) */
+  --space-xxs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+
+  /* Grid */
+  --container-max: 1000px;
+
+  /* Fokus */
+  --focus-ring: 3px solid rgba(43,108,176,0.18);
+  --focus-color: rgba(43,108,176,0.35);
+}
+
+/* För mörkt läge (valfritt) — användare med prefers-color-scheme */
+@media (prefers-color-scheme: dark) {
+  :root{
+    --bg: #0b1220;
+    --card-bg: #071025;
+    --muted: #9aa6b2;
+    --border: rgba(255,255,255,0.06);
+    --shadow: 0 8px 30px rgba(0,0,0,0.6);
+  }
+}
+
+/* ------------------------
+   2. Global reset och bas
+   ------------------------ */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  font-size: var(--base-font-size);
+  -webkit-text-size-adjust: 100%;
+}
+
+body{
+  font-family: var(--font-sans);
+  line-height: var(--line-height);
+  background: var(--bg);
+  color: #111;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Länkar */
+a{
+  color: var(--accent-600);
+  text-decoration: none;
+}
+a:hover,
+a:focus{ text-decoration: underline; }
+
+/* Hjälpklasser (utility) */
+.container{
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding-inline: var(--space-lg);
+  padding-block: var(--space-md);
+}
+
+/* Enkel grid / helper-klasser */
+.grid{ display: grid; gap: var(--space-md); }
+.two-up{ grid-template-columns: repeat(2, 1fr); }
+.gap-lg{ gap: var(--space-lg); }
+
+/* Små hjälpklasser */
+.mt-md{ margin-top: var(--space-md); }
+.mb-md{ margin-bottom: var(--space-md); }
+
+/* Skip-link för tangentbordsnavigering */
+.skip-link{
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.skip-link:focus{
+  left: var(--space-md);
+  top: var(--space-md);
+  width: auto;
+  height: auto;
+  background: #fff;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: 6px;
+  box-shadow: 0 6px 18px rgba(10,20,30,0.12);
+  z-index: 9999;
+}
+
+/* ------------------------
+   3. Header / Navigation
+   ------------------------ */
+.site-header{
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  backdrop-filter: blur(4px);
+}
+
+/* Header inner layout */
+.header-inner{
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+/* Branding */
+.brand{
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+.logo{
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, var(--accent), #68b3ff);
+  box-shadow: 0 4px 14px rgba(43,108,176,0.12);
+}
+.logo img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Brand text (titlar) */
+.site-title{ font-weight: 800; font-size: clamp(16px, 1.1rem, 18px); }
+.site-subtitle{ font-size: 12px; color: var(--muted); }
+
+/* Primär navigering — desktop first */
+.primary-nav{
+  margin-left: auto;
+}
+.nav-list{
+  list-style: none;
+  display: flex;
+  gap: var(--space-md);
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+.nav-list a{
+  display: inline-block;
+  padding: 8px;
+  color: var(--muted);
+  font-weight: 600;
+  border-radius: 8px;
+  transition: background 160ms, color 160ms, transform 160ms;
+}
+.nav-list a:hover,
+.nav-list a:focus{
+  color: var(--accent-600);
+  background: rgba(43,108,176,0.06);
+  transform: translateY(-1px);
+}
+
+/* Mobil menyknapp */
+.menu-toggle{
+  display: none; /* syns först i mindre vyer (se media queries) */
+  background: transparent;
+  border: none;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.menu-toggle:focus{
+  outline: none;
+  box-shadow: var(--focus-ring);
+  background: var(--focus-color);
+}
+
+/* Hamburger (visuellt) */
+.hamburger{
+  display: inline-block;
+  width: 26px;
+  height: 2px;
+  background: currentColor;
+  position: relative;
+}
+.hamburger::before,
+.hamburger::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: currentColor;
+}
+.hamburger::before{ top: -7px; }
+.hamburger::after{ top: 7px; }
+
+/* ------------------------
+   4. Hero / Intro
+   ------------------------ */
+.hero{ padding-top: var(--space-lg); padding-bottom: var(--space-lg); }
+.hero-card{ display: grid; gap: var(--space-sm); align-items: start; }
+
+/* Typografi: rubriker, lead text */
+h1{ font-size: clamp(26px, 2.4vw, 36px); margin: 0 0 var(--space-sm) 0; line-height: 1.05; }
+.lead{ color: var(--muted); margin: 0 0 var(--space-md) 0; }
+
+/* HERO actions */
+.hero-actions .btn{ margin-right: var(--space-sm); }
+
+/* ------------------------
+   5. Kort / Card-komponent
+   ------------------------ */
+.card{
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: var(--space-md);
+  box-shadow: var(--shadow);
+  border: 1px solid transparent;
+}
+
+/* Rubriker inom sektioner */
+.content-section h2{
+  margin-top: 0;
+  margin-bottom: var(--space-sm);
+}
+
+/* Policies-lista (program) */
+.policies{ list-style: none; padding-left: 0; margin: var(--space-sm) 0; }
+.policies li{ margin-bottom: var(--space-xs); color: #111; }
+
+/* Nyheter */
+.news-item h3{ margin: 0 0 6px 0; font-size: 1.05rem; }
+.news-date{ display: block; color: var(--muted); font-size: 0.9rem; margin-bottom: var(--space-xs); }
+
+/* ------------------------
+   6. Formulär
+   ------------------------ */
+.signup-form{ display: grid; gap: var(--space-sm); }
+.form-row{ display: flex; flex-direction: column; gap: var(--space-xs); }
+
+label{
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+input[type="text"],
+input[type="email"],
+textarea,
+select{
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  font-size: 1rem;
+  transition: box-shadow 120ms, border-color 120ms;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-color: var(--accent-600);
+}
+
+/* Form actions */
+.form-actions{ display: flex; gap: var(--space-sm); align-items: center; }
+
+/* ------------------------
+   7. Knapp-stilar (btn)
+   ------------------------ */
+.btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: transform 140ms ease, box-shadow 140ms ease, background 140ms;
+}
+
+/* Primär knapp */
+.btn.primary{
+  background: linear-gradient(180deg, var(--accent) 0%, var(--accent-600) 100%);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(43,108,176,0.18);
+}
+.btn.primary:hover{ transform: translateY(-2px); }
+
+/* Ghost / sekundär knapp */
+.btn.ghost{
+  background: transparent;
+  color: var(--accent-600);
+  border: 1px solid rgba(43,108,176,0.08);
+}
+.btn.ghost:hover{ background: rgba(43,108,176,0.04); transform: translateY(-1px); }
+
+/* Fokus- och tangentbordsstöd */
+a:focus, button:focus, input:focus, textarea:focus{
+  outline: none;
+  /* Använd focus-visible för bättre kontroll (se nedan) */
+}
+
+/* För moderna webbläsare: bara visa ringen när fokus syns (inte på mus) */
+:focus:not(:focus-visible){
+  box-shadow: none;
+}
+
+/* ------------------------
+   8. Footer
+   ------------------------ */
+.site-footer{
+  margin-top: var(--space-xl);
+  padding: var(--space-md) 0;
+  color: var(--muted);
+  background: transparent;
+  border-top: 1px solid var(--border);
+}
+
+/* ------------------------
+   9. Responsivitet
+   ------------------------ */
+@media (max-width: 900px){
+  .two-up{ grid-template-columns: 1fr; }
+
+  /* Visa menyknapp och göm standardnav */
+  .menu-toggle{ display: inline-block; margin-left: auto; color: var(--muted); }
+  .primary-nav{ position: absolute; top: 100%; right: 12px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 8px; display: none; box-shadow: var(--shadow); width: calc(100% - 48px); max-width: 320px; }
+
+  /* När nav öppnas via data-attribute */
+  .primary-nav[data-open="true"]{ display: block; }
+
+  .nav-list{ flex-direction: column; align-items: stretch; }
+  .nav-list a{ padding: 10px 12px; }
+}
+
+/* Mindre skärmar */
+@media (max-width: 420px){
+  .header-inner{ padding-inline: 12px; }
+  .logo{ width: 48px; height: 48px; border-radius: 8px; }
+}
+
+/* ------------------------
+   10. Print-stilar
+   ------------------------ */
+@media print{
+  body{ background: #fff; color: #000; }
+  .site-header, .site-footer, .menu-toggle, .nav-list { display: none !important; }
+  .container{ padding: 12mm; max-width: 100%; }
+  .card{ box-shadow: none; border: 1px solid #ddd; }
+}
+
+/* ------------------------
+   11. Prefers-reduced-motion
+   ------------------------ */
+@media (prefers-reduced-motion: reduce){
+  * { transition: none !important; animation: none !important; }
+}
+
+/* ------------------------
+   12. Tillgänglighetstips (kommentar)
+   ------------------------
+   - Håll kontrasten god (kontrollera mot WCAG).
+   - Använd aria-etiketter där det behövs (t.ex. för dynamiska widgets).
+   - Testa med tangentbord (Tab/Shift+Tab) och skärm-läsare.
+   ------------------------ */
