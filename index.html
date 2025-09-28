@@ -5,19 +5,148 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Graggenpartiet — Officiell hemsida</title>
   <meta name="description" content="Satirisk hemsida för Graggenpartiet. Vision, åsikter, program och kontaktuppgifter." />
-  <link rel="stylesheet" href="style.css">
-  <meta name="theme-color" content="#2b6cb0" />
+  <meta name="theme-color" content="#071025" />
+
+  <style>
+    /* ===== Grundinställningar och variabler ===== */
+    :root{
+      --bg: #071025;         /* mycket mörk bakgrund */
+      --panel: rgba(255,255,255,0.04); /* kortbakgrund */
+      --muted-panel: rgba(255,255,255,0.02);
+      --accent: #2b6cb0;
+      --accent-600: #1e56a0;
+      --text: #ffffff;       /* ALL text ska vara vit */
+      --muted: rgba(255,255,255,0.75);
+      --border: rgba(255,255,255,0.06);
+      --shadow: 0 6px 18px rgba(0,0,0,0.6);
+      --radius: 12px;
+      --container-max: 1000px;
+      --space-sm: 12px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --focus-color: rgba(43,108,176,0.35);
+      --font-sans: Inter, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    /* ------------------------
+       Global reset och bas
+       ------------------------ */
+    *{box-sizing:border-box}
+    html{font-family:var(--font-sans);-webkit-text-size-adjust:100%}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text) !important; /* tvinga vit text överallt */
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.6;
+    }
+
+    /* Gör verkligen all text vit, inklusive vanliga element */
+    body, header, nav, main, footer, h1,h2,h3,h4,h5,h6, p, a, li, small, label, input, textarea, select, button {
+      color: var(--text) !important;
+    }
+
+    /* container */
+    .container{ max-width:var(--container-max); margin:0 auto; padding:24px; }
+
+    /* skip link */
+    .skip-link{ position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden; }
+    .skip-link:focus{ left:16px; top:16px; width:auto; height:auto; padding:8px 12px; background:#fff0; border-radius:8px; box-shadow:0 6px 18px rgba(0,0,0,0.6); color:var(--text); z-index:9999; }
+
+    /* Header */
+    header{ background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:50; backdrop-filter: blur(4px); }
+    .header-inner{ display:flex; align-items:center; gap:16px; }
+    .brand{ display:flex; align-items:center; gap:12px; }
+    .logo{ width:56px; height:56px; border-radius:10px; overflow:hidden; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,var(--accent),#68b3ff); box-shadow:0 4px 14px rgba(43,108,176,0.12); flex-shrink:0; }
+    .logo img{ width:100%; height:100%; object-fit:contain; display:block; }
+    .site-title{ font-weight:800; font-size:16px; }
+    .site-subtitle{ font-size:12px; color:var(--muted); }
+
+    /* Navigation */
+    nav{ margin-left:auto; }
+    .nav-list{ list-style:none; display:flex; gap:14px; margin:0; padding:0; align-items:center; }
+    .nav-list a{ text-decoration:none; color:var(--text) !important; font-weight:600; padding:8px; border-radius:8px; transition:background .14s, transform .14s; }
+    .nav-list a:hover, .nav-list a:focus{ background: rgba(255,255,255,0.03); transform:translateY(-2px); color:var(--text) !important; }
+
+    /* Hamburger för mobil */
+    .menu-toggle{ display:none; background:transparent; border:none; padding:8px; border-radius:8px; color:var(--text); cursor:pointer; }
+    .hamburger{ width:26px; height:2px; background:currentColor; position:relative; display:inline-block; }
+    .hamburger::before, .hamburger::after{ content:""; position:absolute; left:0; right:0; height:2px; background:currentColor; }
+    .hamburger::before{ top:-7px } .hamburger::after{ top:7px }
+
+    /* Hero */
+    .hero{ padding:48px 0; display:grid; grid-template-columns:1fr; gap:20px; }
+    .hero-card{ background:var(--panel); padding:18px; border-radius:12px; box-shadow:var(--shadow); border:1px solid rgba(255,255,255,0.03); }
+    .hero h1{ font-size:32px; margin:0 0 8px; color:var(--text) !important; }
+    .lead{ margin:0; color:var(--muted); }
+
+    /* Card general */
+    .card{ background:var(--panel); padding:18px; border-radius:12px; box-shadow:var(--shadow); border:1px solid rgba(255,255,255,0.03); color:var(--text) !important; }
+
+    .grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+
+    /* Buttons */
+    .btn{ display:inline-block; padding:10px 16px; border-radius:10px; background:var(--accent); color:#fff; text-decoration:none; font-weight:700; border:1px solid rgba(255,255,255,0.06); }
+    .btn.ghost{ background:transparent; color:var(--text) !important; border:1px solid rgba(255,255,255,0.04); }
+    .btn:focus{ outline:none; box-shadow:0 0 0 4px var(--focus-color); }
+
+    /* Lists and policies */
+    .policies li{ margin-bottom:10px; color:var(--text) !important; }
+
+    /* Form */
+    form label{ display:block; font-size:14px; margin-bottom:6px; color:var(--muted); }
+    input, textarea, select {
+      width:100%;
+      padding:10px;
+      border:1px solid rgba(255,255,255,0.06);
+      border-radius:8px;
+      background: transparent;
+      color: var(--text) !important;
+    }
+    input::placeholder, textarea::placeholder { color: rgba(255,255,255,0.7) !important; }
+
+    /* Footer */
+    footer{ margin-top:36px; padding:24px 0; color:var(--muted); text-align:center; }
+
+    /* Accessibility: fokus */
+    :focus:not(:focus-visible){ box-shadow:none; }
+    :focus-visible{ outline:none; box-shadow:0 0 0 4px var(--focus-color); }
+
+    /* Responsiv */
+    @media(max-width:900px){
+      .grid{ grid-template-columns:1fr; }
+      .hero{ padding:28px 0; }
+
+      .menu-toggle{ display:inline-block; }
+      .primary-nav { position:absolute; top:100%; right:12px; background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:8px; display:none; box-shadow:var(--shadow); width:calc(100% - 48px); max-width:320px; }
+      .primary-nav[data-open="true"]{ display:block; }
+      .nav-list{ flex-direction:column; align-items:stretch; }
+      .nav-list a{ padding:10px 12px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; animation: none !important; }
+    }
+
+    /* Print */
+    @media print {
+      body{ background:#fff; color:#000; }
+      header, .menu-toggle, .nav-list, footer { display:none !important; }
+      .card{ box-shadow:none; border:1px solid #ddd; }
+    }
+  </style>
 </head>
 <body>
   <a class="skip-link" href="#main">Hoppa till innehåll</a>
 
-  <header class="site-header" role="banner">
+  <header>
     <div class="container header-inner">
-      <div class="brand" aria-label="Graggenpartiet">
-        <div class="logo" aria-hidden="false">
-          <img src="assets/logo.png" alt="Graggenpartiets logotyp — en grön groda formad som bokstaven G">
+      <div class="brand">
+        <div class="logo">
+          <img src="assets/logo.png" alt="Graggenpartiets logotyp">
         </div>
-        <div class="brand-text">
+        <div>
           <div class="site-title">Graggenpartiet</div>
           <div class="site-subtitle">Hemsida</div>
         </div>
@@ -27,104 +156,104 @@
         <span class="hamburger" aria-hidden="true"></span>
       </button>
 
-      <nav id="primary-navigation" class="primary-nav" aria-label="Huvudmeny">
+      <nav id="primary-navigation" class="primary-nav" aria-label="Huvudmeny" data-open="false">
         <ul class="nav-list">
-          <li><a href="index.html#vision">Vision</a></li>
+          <li><a href="#vision">Vision</a></li>
           <li><a href="program.html">Program (lång)</a></li>
-          <li><a href="index.html#nyheter">Nyheter</a></li>
-          <li><a href="index.html#delta">Delta</a></li>
-          <li><a href="index.html#kontakt">Kontakt</a></li>
+          <li><a href="#nyheter">Nyheter</a></li>
+          <li><a href="#delta">Delta</a></li>
+          <li><a href="#kontakt">Kontakt</a></li>
         </ul>
       </nav>
     </div>
   </header>
 
-  <main id="main" class="container" role="main">
-    <section class="hero" aria-labelledby="hero-heading">
-      <div class="card hero-card">
-        <h1 id="hero-heading">Välkommen till Graggenpartiet</h1>
+  <main id="main" class="container">
+    <section class="hero">
+      <div class="hero-card">
+        <h1>Välkommen till Graggenpartiet</h1>
         <p class="lead">En vision om ordning, disciplin och en groda som styr landet.</p>
-        <p class="hero-actions">
-          <a class="btn primary" href="program.html">Läs hela partiprogrammet</a>
+        <div style="margin-top:14px">
+          <a class="btn" href="program.html">Läs hela partiprogrammet</a>
           <a class="btn ghost" href="#delta">Engagera dig</a>
-        </p>
+        </div>
       </div>
     </section>
 
-    <section id="vision" class="card content-section" aria-labelledby="vision-heading">
-      <h2 id="vision-heading">Vision</h2>
+    <section id="vision" class="card">
+      <h2>Vision</h2>
       <p>Graggenpartiet ska ena Sverige under ett starkt ledarskap. Ordning och disciplin sätts före byråkrati och ineffektivitet. Alla beslut centraliseras för att säkerställa effektivitet och långsiktig stabilitet.</p>
     </section>
 
-    <section id="program" class="card content-section" aria-labelledby="program-short-heading">
-      <h2 id="program-short-heading">Program — kortversion</h2>
+    <section id="program" class="card">
+      <h2>Partiprogram (kortversion)</h2>
       <ul class="policies">
         <li><strong>Makt:</strong> Full diktatur på 10 mandat under Kejsare Gregor. Oppositionen? Skrotad.</li>
         <li><strong>Säkerhet:</strong> En jättemur runt Sverige och barriärer kring utsatta områden.</li>
         <li><strong>Kultur:</strong> Grodan Boll blir nationell symbol, Fågel Roger nationalsång. All kultur övervakas.</li>
         <li><strong>Ekonomi:</strong> 90 % skatt: 80 % till Graggenfonden, 10 % till Grodan Boll.</li>
       </ul>
-      <p class="mt-md"><a class="btn primary" href="program.html">Läs hela programmet (detaljerad version)</a></p>
     </section>
 
-    <section id="nyheter" class="card content-section" aria-labelledby="nyheter-heading">
-      <h2 id="nyheter-heading">Nyheter</h2>
-      <article class="news-item" aria-labelledby="news-1-title">
-        <h3 id="news-1-title">Lansering av hemsidan</h3>
-        <time class="news-date" datetime="2025-01-01">Publicerad idag</time>
+    <section id="nyheter" class="card">
+      <h2>Nyheter</h2>
+      <article style="margin-bottom:12px">
+        <strong>Lansering av hemsidan</strong>
+        <div style="color:var(--muted);font-size:13px">Publicerad idag</div>
         <p>Nu finns Graggenpartiet på nätet. Ta del av visionen.</p>
       </article>
     </section>
 
-    <section id="delta" class="card content-section" aria-labelledby="delta-heading">
-      <h2 id="delta-heading">Delta / Bli medlem</h2>
+    <section id="delta" class="card">
+      <h2>Delta / Bli medlem</h2>
       <p>Vill du engagera dig i partiet? Fyll i formuläret nedan:</p>
-
-      <form class="signup-form" id="signup" onsubmit="event.preventDefault();alert('Formulär skickat (demo)');">
-        <div class="form-row">
-          <label for="name">Namn</label>
-          <input id="name" name="name" type="text" placeholder="Ditt namn" required aria-required="true">
-        </div>
-
-        <div class="form-row">
-          <label for="email">E-post</label>
-          <input id="email" name="email" type="email" placeholder="kontakt@exempel.se" required aria-required="true">
-        </div>
-
-        <div class="form-row">
-          <label for="message">Meddelande</label>
-          <textarea id="message" name="message" rows="4" placeholder="Berätta mer..."></textarea>
-        </div>
-
-        <div class="form-row form-actions">
-          <button class="btn primary" type="submit">Skicka intresse</button>
-          <button class="btn ghost" type="reset">Rensa</button>
+      <form onsubmit="event.preventDefault();alert('Formulär skickat (demo)')">
+        <label for="name">Namn</label>
+        <input id="name" placeholder="Ditt namn" required />
+        <label for="email" style="margin-top:8px">E-post</label>
+        <input id="email" type="email" placeholder="kontakt@exempel.se" required />
+        <label for="message" style="margin-top:8px">Meddelande</label>
+        <textarea id="message" rows="4" placeholder="Berätta mer..."></textarea>
+        <div style="margin-top:10px">
+          <button class="btn" type="submit">Skicka intresse</button>
         </div>
       </form>
     </section>
 
-    <section id="kontakt" class="grid two-up gap-lg" aria-labelledby="kontakt-heading">
-      <div class="card" aria-labelledby="kontakt-heading">
-        <h3 id="kontakt-heading">Kontakt</h3>
-        <p>E-post: <a href="mailto:graggenpartiet@gmail.com">graggenpartiet@gmail.com</a></p>
+    <section id="kontakt" style="margin-top:18px">
+      <div class="grid">
+        <div class="card">
+          <h3>Kontakt</h3>
+          <p>E-post: <a href="mailto:graggenpartiet@gmail.com">graggenpartiet@gmail.com</a></p>
+        </div>
+        <div class="card">
+          <h3>Sociala medier</h3>
+          <p>Snart på en plattform nära dig!</p>
+        </div>
       </div>
-      
-  <footer class="site-footer" role="contentinfo">
-    <div class="container footer-inner">
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
       <small>2025 copyright © Graggenpartiet.</small>
     </div>
   </footer>
 
   <script>
+    // Minimal meny-logik för mobil
     (function () {
       const toggle = document.querySelector('.menu-toggle');
       const nav = document.getElementById('primary-navigation');
       if (!toggle || !nav) return;
+
       toggle.addEventListener('click', function () {
         const isOpen = this.getAttribute('aria-expanded') === 'true';
         this.setAttribute('aria-expanded', String(!isOpen));
         nav.dataset.open = isOpen ? 'false' : 'true';
       });
+
+      // Avsluta med Escape
       document.addEventListener('keyup', function (e) {
         if (e.key === 'Escape' && nav.dataset.open === 'true') {
           toggle.setAttribute('aria-expanded', 'false');
