@@ -1,16 +1,32 @@
-/* =========================================================================
-   style.css — detaljerad, modulär och tillgänglig stil för Graggenpartiet
-   ========================================================================= */
+/* ==========================================================================
+   style.css — Omskriven komplett stil för Graggenpartiet
+   - Lättläst, tillgänglig, responsiv
+   - Byt variabler i :root för att anpassa färger/avstånd
+   ========================================================================== */
 
-/* 1. Root-variabler & design tokens */
+/* -----------------------
+   1) Variabler (design tokens)
+   ----------------------- */
 :root{
+  /* Primära färger */
   --accent: #2b6cb0;
   --accent-600: #1e56a0;
-  --muted: #6b7280;
-  --bg: #f7fafc;
-  --card-bg: #ffffff;
+
+  /* Text / bakgrund */
+  --bg: #f7fafc;           /* sidbakgrund (ljus) */
+  --card-bg: #ffffff;      /* kort / panel */
+  --text: #3a3f45;         /* huvudtext: mörkgrå, inte svart */
+  --muted: #6b7280;        /* sekundär text / meta */
+  --link: var(--accent-600);
+
+  /* Gränser / skuggor */
   --border: #e6eef6;
   --shadow: 0 6px 18px rgba(10,20,30,0.04);
+
+  /* Fokus */
+  --focus-color: rgba(43,108,176,0.35);
+
+  /* Typografi & spacing */
   --font-sans: Inter, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --base-font-size: 16px;
   --line-height: 1.6;
@@ -20,135 +36,380 @@
   --space-md: 16px;
   --space-lg: 24px;
   --space-xl: 40px;
+
+  /* Layout */
   --container-max: 1000px;
-  --focus-ring: 3px solid rgba(43,108,176,0.18);
-  --focus-color: rgba(43,108,176,0.35);
+  --radius: 12px;
 }
 
-@media (prefers-color-scheme: dark) {
+/* Mörkt läge: justera för bättre kontrast */
+@media (prefers-color-scheme: dark){
   :root{
-    --bg: #0b1220;
-    --card-bg: #071025;
+    --bg: #08101a;
+    --card-bg: #09121a;
+    --text: #dce7f1;
     --muted: #9aa6b2;
     --border: rgba(255,255,255,0.06);
-    --shadow: 0 8px 30px rgba(0,0,0,0.6);
+    --shadow: 0 10px 30px rgba(0,0,0,0.65);
+    --focus-color: rgba(43,108,176,0.55);
   }
 }
 
-/* 2. Global reset och bas */
+/* -----------------------
+   2) Bas-reset & typografi
+   ----------------------- */
 *,
 *::before,
 *::after { box-sizing: border-box; }
 
 html { font-size: var(--base-font-size); -webkit-text-size-adjust: 100%; }
 
-body{
+body {
+  margin: 0;
   font-family: var(--font-sans);
   line-height: var(--line-height);
   background: var(--bg);
-  color: #111;
-  margin: 0;
+  color: var(--text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-a{ color: var(--accent-600); text-decoration: none; }
-a:hover, a:focus{ text-decoration: underline; }
+/* Länkar */
+a { color: var(--link); text-decoration: none; }
+a:hover, a:focus { text-decoration: underline; }
 
-.container{ max-width: var(--container-max); margin: 0 auto; padding-inline: var(--space-lg); padding-block: var(--space-md); }
-
-.grid{ display: grid; gap: var(--space-md); }
-.two-up{ grid-template-columns: repeat(2, 1fr); }
-.gap-lg{ gap: var(--space-lg); }
-
-.mt-md{ margin-top: var(--space-md); }
-.mb-md{ margin-bottom: var(--space-md); }
-
-.skip-link{ position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
-.skip-link:focus{ left: var(--space-md); top: var(--space-md); width: auto; height: auto; background: #fff; padding: var(--space-xs) var(--space-sm); border-radius: 6px; box-shadow: 0 6px 18px rgba(10,20,30,0.12); z-index: 9999; }
-
-/* 3. Header / Navigation */
-.site-header{ background: var(--card-bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 40; backdrop-filter: blur(4px); }
-.header-inner{ display: flex; align-items: center; gap: var(--space-md); }
-
-.brand{ display: flex; align-items: center; gap: var(--space-sm); }
-.logo{ width: 56px; height: 56px; border-radius: 10px; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; background: linear-gradient(135deg, var(--accent), #68b3ff); box-shadow: 0 4px 14px rgba(43,108,176,0.12); }
-.logo img{ width: 100%; height: 100%; object-fit: contain; display: block; }
-
-.site-title{ font-weight: 800; font-size: clamp(16px, 1.1rem, 18px); }
-.site-subtitle{ font-size: 12px; color: var(--muted); }
-
-.primary-nav{ margin-left: auto; }
-.nav-list{ list-style: none; display: flex; gap: var(--space-md); align-items: center; margin: 0; padding: 0; }
-.nav-list a{ display: inline-block; padding: 8px; color: var(--muted); font-weight: 600; border-radius: 8px; transition: background 160ms, color 160ms, transform 160ms; }
-.nav-list a:hover, .nav-list a:focus{ color: var(--accent-600); background: rgba(43,108,176,0.06); transform: translateY(-1px); }
-
-.menu-toggle{ display: none; background: transparent; border: none; padding: 8px; border-radius: 8px; cursor: pointer; }
-.menu-toggle:focus{ outline: none; box-shadow: var(--focus-ring); background: var(--focus-color); }
-
-.hamburger{ display: inline-block; width: 26px; height: 2px; background: currentColor; position: relative; }
-.hamburger::before, .hamburger::after{ content: ""; position: absolute; left: 0; right: 0; height: 2px; background: currentColor; }
-.hamburger::before{ top: -7px; } .hamburger::after{ top: 7px; }
-
-/* 4. Hero / Intro */
-.hero{ padding-top: var(--space-lg); padding-bottom: var(--space-lg); }
-.hero-card{ display: grid; gap: var(--space-sm); align-items: start; }
-h1{ font-size: clamp(26px, 2.4vw, 36px); margin: 0 0 var(--space-sm) 0; line-height: 1.05; }
-.lead{ color: var(--muted); margin: 0 0 var(--space-md) 0; }
-.hero-actions .btn{ margin-right: var(--space-sm); }
-
-/* 5. Kort / Card-komponent */
-.card{ background: var(--card-bg); border-radius: 12px; padding: var(--space-md); box-shadow: var(--shadow); border: 1px solid transparent; }
-.content-section h2{ margin-top: 0; margin-bottom: var(--space-sm); }
-.policies{ list-style: none; padding-left: 0; margin: var(--space-sm) 0; }
-.policies li{ margin-bottom: var(--space-xs); color: #111; }
-.news-item h3{ margin: 0 0 6px 0; font-size: 1.05rem; }
-.news-date{ display: block; color: var(--muted); font-size: 0.9rem; margin-bottom: var(--space-xs); }
-
-/* 6. Formulär */
-.signup-form{ display: grid; gap: var(--space-sm); }
-.form-row{ display: flex; flex-direction: column; gap: var(--space-xs); }
-label{ font-size: 0.95rem; color: var(--muted); }
-input[type="text"], input[type="email"], textarea, select{ padding: 10px; border-radius: 8px; border: 1px solid var(--border); background: transparent; font-size: 1rem; transition: box-shadow 120ms, border-color 120ms; }
-input:focus, textarea:focus, select:focus{ outline: none; box-shadow: var(--focus-ring); border-color: var(--accent-600); }
-.form-actions{ display: flex; gap: var(--space-sm); align-items: center; }
-
-/* 7. Knapp-stilar (btn) */
-.btn{ display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 10px 16px; border-radius: 10px; font-weight: 700; cursor: pointer; border: 1px solid transparent; transition: transform 140ms ease, box-shadow 140ms ease, background 140ms; }
-.btn.primary{ background: linear-gradient(180deg, var(--accent) 0%, var(--accent-600) 100%); color: #fff; box-shadow: 0 8px 20px rgba(43,108,176,0.18); }
-.btn.primary:hover{ transform: translateY(-2px); }
-.btn.ghost{ background: transparent; color: var(--accent-600); border: 1px solid rgba(43,108,176,0.08); }
-.btn.ghost:hover{ background: rgba(43,108,176,0.04); transform: translateY(-1px); }
-
-:focus:not(:focus-visible){ box-shadow: none; }
-
-/* 8. Footer */
-.site-footer{ margin-top: var(--space-xl); padding: var(--space-md) 0; color: var(--muted); background: transparent; border-top: 1px solid var(--border); }
-
-/* 9. Responsivitet */
-@media (max-width: 900px){
-  .two-up{ grid-template-columns: 1fr; }
-  .menu-toggle{ display: inline-block; margin-left: auto; color: var(--muted); }
-  .primary-nav{ position: absolute; top: 100%; right: 12px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 10px; padding: 8px; display: none; box-shadow: var(--shadow); width: calc(100% - 48px); max-width: 320px; }
-  .primary-nav[data-open="true"]{ display: block; }
-  .nav-list{ flex-direction: column; align-items: stretch; }
-  .nav-list a{ padding: 10px 12px; }
+/* Container */
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding-inline: var(--space-lg);
+  padding-block: var(--space-md);
 }
 
-@media (max-width: 420px){
-  .header-inner{ padding-inline: 12px; }
-  .logo{ width: 48px; height: 48px; border-radius: 8px; }
+/* Utility-klasser (små, användbara) */
+.mt-sm { margin-top: var(--space-sm); }
+.mt-md { margin-top: var(--space-md); }
+.mb-sm { margin-bottom: var(--space-sm); }
+.mb-md { margin-bottom: var(--space-md); }
+
+/* Skip-link för tangentbordsanvändare */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.skip-link:focus {
+  left: var(--space-md);
+  top: var(--space-md);
+  width: auto;
+  height: auto;
+  background: var(--card-bg);
+  color: var(--text);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  z-index: 9999;
 }
 
-/* 10. Print-stilar */
-@media print{
-  body{ background: #fff; color: #000; }
+/* -----------------------
+   3) Header & navigering
+   ----------------------- */
+.site-header {
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(4px);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+/* Branding */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+.logo {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--accent), #68b3ff);
+  box-shadow: 0 4px 14px rgba(43,108,176,0.12);
+  flex-shrink: 0;
+}
+.logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.brand-text .site-title { font-weight: 800; font-size: 1.05rem; }
+.brand-text .site-subtitle { font-size: 0.85rem; color: var(--muted); }
+
+/* Navigering (desktop) */
+.primary-nav { margin-left: auto; }
+.nav-list {
+  list-style: none;
+  display: flex;
+  gap: var(--space-md);
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+.nav-list a {
+  color: var(--muted);
+  font-weight: 600;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background .16s, color .16s, transform .16s;
+}
+.nav-list a:hover, .nav-list a:focus {
+  color: var(--accent-600);
+  background: rgba(43,108,176,0.06);
+  transform: translateY(-1px);
+}
+
+/* Mobil hamburger-knapp */
+.menu-toggle {
+  display: none; /* syns i media queries */
+  background: transparent;
+  border: none;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--muted);
+}
+.menu-toggle:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px var(--focus-color);
+  background: rgba(43,108,176,0.04);
+}
+.hamburger {
+  width: 26px;
+  height: 2px;
+  background: currentColor;
+  position: relative;
+  display: inline-block;
+}
+.hamburger::before,
+.hamburger::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: currentColor;
+}
+.hamburger::before { top: -7px; }
+.hamburger::after { top: 7px; }
+
+/* -----------------------
+   4) Hero / introduktion
+   ----------------------- */
+.hero {
+  padding-block: var(--space-lg);
+}
+.hero-card {
+  display: grid;
+  gap: var(--space-sm);
+}
+h1 {
+  margin: 0 0 var(--space-sm) 0;
+  font-size: clamp(26px, 2.6vw, 36px);
+  line-height: 1.05;
+  color: var(--text);
+}
+.lead {
+  margin: 0;
+  color: var(--muted);
+}
+
+/* Hero actions (knappar) */
+.hero-actions .btn { margin-right: var(--space-sm); }
+
+/* -----------------------
+   5) Card / sektioner
+   ----------------------- */
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: var(--space-md);
+  box-shadow: var(--shadow);
+  border: 1px solid transparent;
+  color: var(--text);
+}
+.content-section h2 {
+  margin-top: 0;
+  margin-bottom: var(--space-sm);
+  color: var(--text);
+}
+
+/* Policies / listor */
+.policies {
+  list-style: none;
+  padding-left: 0;
+  margin: var(--space-sm) 0;
+}
+.policies li { margin-bottom: var(--space-xs); color: var(--text); }
+
+/* Nyheter */
+.news-item h3 { margin: 0 0 6px 0; font-size: 1.05rem; }
+.news-date { display: block; color: var(--muted); font-size: 0.9rem; margin-bottom: var(--space-xs); }
+
+/* -----------------------
+   6) Formulär
+   ----------------------- */
+.signup-form { display: grid; gap: var(--space-sm); }
+.form-row { display: flex; flex-direction: column; gap: var(--space-xs); }
+label { color: var(--muted); font-size: 0.95rem; }
+
+input[type="text"],
+input[type="email"],
+textarea,
+select {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  font-size: 1rem;
+  color: var(--text);
+  transition: box-shadow .12s, border-color .12s;
+}
+
+/* Fokus-stil för fält */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px var(--focus-color);
+  border-color: var(--accent-600);
+}
+
+/* Form actions */
+.form-actions { display: flex; gap: var(--space-sm); align-items: center; flex-wrap: wrap; }
+
+/* -----------------------
+   7) Knapp-stilar
+   ----------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: transform .14s ease, box-shadow .14s ease, background .14s ease;
+}
+
+/* Primär knapp */
+.btn.primary {
+  background: linear-gradient(180deg, var(--accent) 0%, var(--accent-600) 100%);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(43,108,176,0.18);
+}
+.btn.primary:hover { transform: translateY(-2px); }
+
+/* Ghost / sekundär */
+.btn.ghost {
+  background: transparent;
+  color: var(--accent-600);
+  border: 1px solid rgba(43,108,176,0.08);
+}
+.btn.ghost:hover { background: rgba(43,108,176,0.04); transform: translateY(-1px); }
+
+/* Fokus för knappar och länkar (endast vid keyboard navigation) */
+:focus:not(:focus-visible) { box-shadow: none; }
+:focus-visible {
+  box-shadow: 0 0 0 4px var(--focus-color);
+  outline: none;
+}
+
+/* -----------------------
+   8) Footer
+   ----------------------- */
+.site-footer {
+  margin-top: var(--space-xl);
+  padding: var(--space-md) 0;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  background: transparent;
+}
+
+/* -----------------------
+   9) Responsivitet
+   ----------------------- */
+@media (max-width: 900px) {
+  .two-up { grid-template-columns: 1fr; }
+  .menu-toggle { display: inline-block; margin-left: auto; }
+  .primary-nav {
+    position: absolute;
+    top: 100%;
+    right: 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 8px;
+    display: none;
+    box-shadow: var(--shadow);
+    width: calc(100% - 48px);
+    max-width: 340px;
+  }
+  .primary-nav[data-open="true"] { display: block; }
+  .nav-list {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .nav-list a { padding: 10px 12px; }
+}
+
+@media (max-width: 420px) {
+  .header-inner { padding-inline: 12px; }
+  .logo { width: 48px; height: 48px; border-radius: 8px; }
+}
+
+/* -----------------------
+   10) Print-stilar
+   ----------------------- */
+@media print {
+  body { background: #fff; color: #000; }
   .site-header, .site-footer, .menu-toggle, .nav-list { display: none !important; }
-  .container{ padding: 12mm; max-width: 100%; }
-  .card{ box-shadow: none; border: 1px solid #ddd; }
+  .container { padding: 12mm; max-width: 100%; }
+  .card { box-shadow: none; border: 1px solid #ddd; }
 }
 
-/* 11. Prefers-reduced-motion */
-@media (prefers-reduced-motion: reduce){
+/* -----------------------
+   11) Reduced motion
+   ----------------------- */
+@media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
 }
+
+/* -----------------------
+   12) Små tillägg / helpers
+   ----------------------- */
+/* Separerare */
+hr { border: none; border-top: 1px solid var(--border); margin: var(--space-md) 0; }
+
+/* Grid helper (fallback) */
+.grid { display: grid; gap: var(--space-md); }
+
+/* Accessibility note (kommentar):
+   - Kontrollera kontrast med WCAG-verktyg. Justera --text och --muted vid behov.
+   - Testa tabb-navigering och skärm-läsare.
+*/
